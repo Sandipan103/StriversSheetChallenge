@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+// approach - 1 :
+// int findDuplicate(vector<int> &arr, int n)	{
+// 	sort(arr.begin(), arr.end());
+// 	for(int i=1; i<n; i++)	{
+// 		if(arr[i] == arr[i-1])
+// 			return arr[i];
+// 	}
+// 	return 1;
+// }
+
+// approach - 2 :
+// int findDuplicate(vector<int> &arr, int n){
+// 	unordered_map<int, int> mp;
+// 	for(auto it : arr)	{
+// 		mp[it]++;
+// 		if(mp[it] > 1)	return it;
+// 	}
+// 	return 1;
+// }
+
+// approach - 3 :
+int findDuplicate(vector<int> &arr, int n)	{
+	int fast=arr[0], slow=arr[0];
+	while(1)	{
+		fast = arr[arr[fast]];
+		slow = arr[slow];
+		if(slow == fast)	break;
+	}
+	fast=arr[0];
+	while(slow != fast)
+		fast = arr[fast], slow = arr[slow];
+	return fast;
+}
