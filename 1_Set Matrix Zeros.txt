@@ -1,0 +1,68 @@
+#include <bits/stdc++.h>
+#define vi vector<int>
+#define vvi vector<vi>
+
+// approach - 3:
+void setZeros(vector<vector<int>> &matrix)	{
+	int n = matrix.size(), m = matrix[0].size();
+	int r0=1;
+	for(int i=0; i<n; i++)	{
+		for(int j=0; j<m; j++)	{
+			if(matrix[i][j] == 0)	{
+				if(i==0)	r0=0;
+				if(i!=0)	matrix[i][0] = 0;
+				matrix[0][j] = 0;
+			}
+		}
+	}
+
+	for(int i=n-1; i>=0; i--)	{
+		for(int j=m-1; j>=0; j--)	{
+			if(matrix[0][j] == 0)
+				matrix[i][j] = 0;
+			else if(i == 0 && r0 == 0)
+				matrix[i][j] = 0;
+			else if(i != 0 && matrix[i][0] == 0)
+				matrix[i][j] = 0;
+		}
+	}
+}
+
+// approach - 2:
+// void setZeros(vector<vector<int>> &matrix)	{
+// 	int n = matrix.size(), m = matrix[0].size();
+// 	vi row(n, 1), col(m, 1);
+// 	for(int i=0; i<n; i++)	{
+// 		for(int j=0; j<m; j++)	{
+// 			if(matrix[i][j] == 0)	{
+// 				row[i] = 0;
+// 				col[j] = 0;
+// 			}
+// 		}
+// 	}
+
+// 	for(int i=0; i<n; i++)	{
+// 		for(int j=0; j<m; j++)	{
+// 			if(row[i] == 0 || col[j] == 0)	{
+// 				matrix[i][j] = 0;
+// 			}
+// 		}
+// 	}
+// }
+
+// approach - 1:
+// void setZeros(vector<vector<int>> &matrix)	{
+// 	vvi temp = matrix;
+// 	int n = matrix.size(), m = matrix[0].size();
+// 	for(int i=0; i<n; i++)	{
+// 		for(int j=0; j<m; j++)	{
+// 			if(matrix[i][j] == 0)	{
+// 				for(int k=0; k<m; k++)
+// 				temp[i][k] = 0;
+// 				for(int k=0; k<n; k++)
+// 				temp[k][j] = 0;
+// 			}
+// 		}
+// 	}
+// 	matrix = temp;
+// }
