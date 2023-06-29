@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+#define vi vector<int>
+#define vvi vector<vi>
+
+void rotateMatrix(vector<vector<int>> &mat, int n, int m)   {
+    vvi temp = mat;
+    int sr = 0, er = n-1, sc = 0, ec = m-1;
+    while(sr < er && sc < ec)   {
+        for(int i=sc+1; i<=ec; i++)
+        mat[sr][i] = temp[sr][i-1];
+
+        for(int i=sr+1; i<=er; i++)
+        mat[i][ec] = temp[i-1][ec];
+
+        for(int i=ec-1; i>=sc; i--)
+        mat[er][i] = temp[er][i+1];
+
+        for(int i=er-1; i>=sr; i--)
+        mat[i][sc] = temp[i+1][sc];
+        
+        sr++;   er--;   sc++;   ec--;
+    }
+}
