@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+#define ll long long
+
+ll power(int x, int n, int m)   {
+    if(n==0)    return 1;
+    if(n==1)    return x;
+    int temp = power(x, n/2, m);
+    if(n%2==0)
+    return (temp * 1ll * temp) % m;
+    else
+    return (((temp * 1ll * temp) % m) * x ) % m;
+}
+
+int modularExponentiation(int x, int n, int m) {
+    return power(x, n, m) % m;
+}
