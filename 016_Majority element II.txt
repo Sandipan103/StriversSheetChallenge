@@ -1,0 +1,11 @@
+#include <bits/stdc++.h>
+
+vector<int> majorityElementII(vector<int> &arr) {
+    int n = arr.size();
+    unordered_map<int, int> mp;
+    vector<int> v;
+	for(auto it : arr)  mp[it]++;
+	for(auto it : mp)
+    if(it.second>n/3)   v.push_back(it.first);
+	return v;
+}

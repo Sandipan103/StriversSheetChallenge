@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+#define vi vector<int>
+#define vvi vector<vi>
+
+int solve(int m, int n, int i, int j)	{
+	if(i>=m || j>=n)	return 0;
+	if(i==m-1 && j==n-1)	return 1;
+	return solve(m, n, i+1, j) + solve(m, n, i, j+1);
+}
+
+int solveMem(int m, int n, int i, int j, vvi& dp)	{
+	if(i>=m || j>=n)	return 0;
+	if(i==m-1 && j==n-1)	return 1;
+	if(dp[i][j] != -1)	return dp[i][j];
+	return dp[i][j] = solveMem(m, n, i+1, j, dp) + solveMem(m, n, i, j+1, dp);
+}
+
+int uniquePaths(int m, int n) {
+	// return solve(m, n, 0, 0);
+	vvi dp(m, vi(n, -1));
+	return solveMem(m, n, 0, 0, dp);
+}
