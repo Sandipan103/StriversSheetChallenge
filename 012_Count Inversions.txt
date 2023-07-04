@@ -1,0 +1,13 @@
+#include <bits/stdc++.h> 
+#define ll long long
+long long getInversions(long long *arr, int n){
+    ll cnt = 0;
+    set<ll> s;
+    s.insert(arr[n-1]);
+    for(int i=n-2; i>=0; i--)   {
+        s.insert(arr[i]);
+        int x = distance(s.begin(), s.lower_bound(arr[i]));
+        cnt += x;
+    }
+    return cnt;
+}
