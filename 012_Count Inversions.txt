@@ -1,13 +1,54 @@
-#include <bits/stdc++.h> 
+// approach - 1
+
+#include <bits/stdc++.h>
 #define ll long long
-long long getInversions(long long *arr, int n){
+
+ll merge(long long *arr, int s, int mid, int e) {
+    int i=s, j=mid+1;
+    vector<ll> temp;
     ll cnt = 0;
-    set<ll> s;
-    s.insert(arr[n-1]);
-    for(int i=n-2; i>=0; i--)   {
-        s.insert(arr[i]);
-        int x = distance(s.begin(), s.lower_bound(arr[i]));
-        cnt += x;
+    
+    while(i<=mid && j<=e)   {
+        if(arr[i] < arr[j]) temp.push_back(arr[i++]);
+        else
+            cnt += mid-i+1,temp.push_back(arr[j++]);
     }
+    while(i<=mid)   temp.push_back(arr[i++]);
+    while(j<=e)     temp.push_back(arr[j++]);
+    for(int i=s; i<=e; i++)
+        arr[i] = temp[i-s];
+        
     return cnt;
 }
+
+ll mergeSort(long long *arr, int s, int e)  {
+    if(s >= e)  return 0;
+    ll cnt = 0;
+    int mid = s+(e-s)/2;
+    cnt += mergeSort(arr, s, mid);
+    cnt += mergeSort(arr, mid+1, e);
+    cnt += merge(arr, s, mid, e);
+    return cnt;
+}
+
+long long getInversions(long long *arr, int n){
+    return mergeSort(arr, 0, n-1);
+}
+
+
+
+// approach - 2
+
+// #include <bits/stdc++.h> 
+// #define ll long long
+// long long getInversions(long long *arr, int n){
+//     ll cnt = 0;
+//     set<ll> s;
+//     s.insert(arr[n-1]);
+//     for(int i=n-2; i>=0; i--)   {
+//         s.insert(arr[i]);
+//         int x = distance(s.begin(), s.lower_bound(arr[i]));
+//         cnt += x;
+//     }
+//     return cnt;
+// }
