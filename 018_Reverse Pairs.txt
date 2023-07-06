@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+#define vi vector<int>
+#define pb push_back
+
+int revPair(vi& arr, int s, int mid, int e) {
+    int cnt = 0, j=mid+1;
+    for(int i=s; i<=mid; i++)   {
+        while(j<=e && arr[i] > 2*arr[j])    j++;
+        cnt += j-mid-1;
+    }
+    return cnt;
+}
+
+void merge(vi& arr, int s, int mid, int e)    {
+    vi temp;
+    int i=s, j=mid+1;
+    while(i<= mid && j<=e)  {
+        if(arr[i] <= arr[j])    temp.pb(arr[i++]);
+        else    temp.pb(arr[j++]);
+    }
+    while(i<=mid)   temp.pb(arr[i++]);
+    while(j<=e) temp.pb(arr[j++]);
+    for(int i=s; i<=e; i++)
+    arr[i] = temp[i-s];
+}
+
+int mergeSort(vi& arr, int s, int e)    {
+    if(s >= e) return 0;
+    int cnt = 0, mid = s+(e-s)/2;
+    cnt += mergeSort(arr, s, mid);
+    cnt += mergeSort(arr, mid+1, e);
+    cnt += revPair(arr, s, mid, e);
+    merge(arr, s, mid, e);
+    return cnt;
+}
+
+int reversePairs(vector<int> &arr, int n)	{
+	return mergeSort(arr, 0, n-1);
+}
