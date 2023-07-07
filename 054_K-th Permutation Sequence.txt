@@ -1,0 +1,46 @@
+#define vs vector<string>
+#define vi vector<int>
+#define pb push_back
+#define pob pop_back
+
+// void solve(string& s, int ind, vs& ans)   {
+//     if(ind>=s.length())   {
+//         ans.pb(s);
+//         return;
+//     }
+//     for(int i=ind; i<s.length(); i++)   {
+//         swap(s[i], s[ind]);
+//         solve(s, ind+1, ans);
+//         swap(s[i], s[ind]);
+//     }
+// }
+
+// string getPermutation(int n, int k) {
+//     string s;
+//     for(int i=1; i<=n; i++)
+//     s.push_back(i+'0');
+//     vs ans;
+//     solve(s, 0, ans);
+//     sort(ans.begin(), ans.end());
+//     return ans[k-1];
+// }
+
+string kthPermutation(int n, int k) {
+    string ans = "";
+    vi num;
+    int fact=1;
+    for(int i=1; i<n; i++)  
+        fact *= i, num.pb(i);
+    num.pb(n);
+    k--;
+
+    while(num.size())   {
+        ans.pb(num[k/fact]+'0');
+        num.erase(num.begin() + k/fact);
+        k %= fact;
+        if(num.size())
+        fact /= num.size();
+    }
+
+    return ans;
+}

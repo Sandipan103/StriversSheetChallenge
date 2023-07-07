@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+#define vs vector<string>
+#define vvs vector<vs>
+#define pb push_back
+#define pob pop_back
+
+bool pal(string& s, int i, int j)   {
+    while(i <= j)   {
+        if(s[i] != s[j])    return false;
+        i++;    j--;
+    }
+    return true;
+}
+
+void solve(string& s, int ind, vs& path, vvs& ans)  {
+    if(ind >= s.length())   {
+        ans.pb(path);
+        return;
+    }
+        
+    for(int i=ind; i<s.length(); i++)   {
+        if(pal(s, ind, i))  {
+            path.pb(s.substr(ind, i-ind+1));
+            solve(s, i+1, path, ans);
+            path.pob();
+        }
+    }
+}
+
+vector<vector<string>> partition(string &s) {
+    vvs ans;
+    vs path;
+    solve(s, 0, path, ans);
+    return ans;
+}

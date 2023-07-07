@@ -1,0 +1,17 @@
+#define vi vector<int>
+
+void solve(vi& num, int i, int sum, vi& ans)	{
+	if(i >= num.size())	{
+		ans.push_back(sum);
+		return;
+	}
+	solve(num, i+1, sum+num[i], ans);
+	solve(num, i+1, sum, ans);
+}
+
+vector<int> subsetSum(vector<int> &num)	{
+	vi ans;
+	solve(num, 0, 0, ans);
+	sort(ans.begin(), ans.end());
+	return ans;
+}

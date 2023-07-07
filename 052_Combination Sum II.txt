@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+#define vi vector<int>
+#define vvi vector<vi>
+#define pb push_back
+#define pob pop_back
+
+void solve(vi& arr, int x, int ind, vi& output, vvi& ans)  {
+    if(x == 0)  {
+        ans.pb(output);
+        return;
+    }
+    if(x < 0)   return;
+    for(int i=ind; i<arr.size(); i++)   {
+        output.pb(arr[i]);
+        solve(arr, x-arr[i], i+1, output, ans);
+        while(i<arr.size()-1 && arr[i] == arr[i+1]) i++;
+        output.pob();
+    }
+}
+	
+vector<vector<int>> combinationSum2(vector<int> &arr, int n, int target){
+	sort(arr.begin(), arr.end());
+    vvi ans;
+    vi output;
+    solve(arr, target, 0, output, ans);
+    return ans;
+}
