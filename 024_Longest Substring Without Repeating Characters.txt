@@ -1,0 +1,16 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string s)  {
+    int maxi = 0, j=0;
+    vector<int> v(26, 0);
+    for(int i=0; i<s.length(); i++) {
+        v[s[i] - 'a']++;
+        if(v[s[i] - 'a'] > 1)   {
+            while(j < i && v[s[i] - 'a'] > 1)   {
+                v[s[j] - 'a']--;
+                j++;
+            }
+        }
+        maxi = max(maxi, i-j+1);
+    }
+    return maxi;
+}
