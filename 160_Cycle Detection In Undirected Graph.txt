@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+#define vi vector<int>
+#define vb vector<bool>
+#define vvi vector<vi>
+
+bool dfs(int src, int parent, vvi& adjList, vb& vis) {
+    vis[src] = true;
+    for(auto it : adjList[src])  {
+        if(vis[it] && it != parent) return true;
+        else if(!vis[it] && dfs(it, src, adjList, vis))
+            return true;
+    }
+    return false;
+}
+
+bool bfs(int n, vvi& adjList)   {
+    vb vis(n, false);
+    queue<int> q;
+    unordered_map<int, int> parent;
+    for(int i=1; i<n; i++)  {
+        if(!vis[i]) {
+            parent[i] = -1;
+            q.push(i);
+            vis[i] = true;
+
+            while(!q.empty())   {
+                int frNode = q.front();
+                q.pop();
+                for(auto it : adjList[frNode])  {
+                    if(vis[it] && parent[frNode] == it) continue;
+                    if(vis[it] && parent[frNode] != it) return true;
+                    vis[it] = true;
+                    q.push(it);
+                    parent[it] = frNode;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+bool detectCycle(int n, vvi& adjList)   {
+    // vb vis(n, false);
+    // for(int i=1; i<n; i++)  {
+    //     if(!vis[i] && dfs(i, -1, adjList, vis))
+    //     return true;
+    // }
+    // return false;
+
+    return bfs(n, adjList);
+}
+
+string cycleDetection (vector<vector<int>>& edges, int n, int m)    {
+    vvi adjList(n+1);
+    for(auto it : edges)    {
+        adjList[it[0]].push_back(it[1]);
+        adjList[it[1]].push_back(it[0]);
+    }
+    
+    bool cycle = detectCycle(n+1, adjList);
+    if(cycle)   return "Yes";
+    return "No";
+}

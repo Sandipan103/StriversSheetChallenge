@@ -1,0 +1,78 @@
+// by BFS
+#include <bits/stdc++.h>
+#define vi vector<int>
+#define vvi vector<vi>
+#define vb vector<bool>
+
+vector<int> topologicalSort(vector<vector<int>> &edges, int n, int e)  {
+    vi ans;
+    vb vis(n, false);
+    vvi adjList(n);
+    vi indeg(n, 0);
+    queue<int> q;
+
+    for(auto it : edges)    
+        adjList[it[0]].push_back(it[1]), indeg[it[1]]++;
+
+    for(int i=0; i<n; i++)  {
+        if(indeg[i] == 0)   {
+            q.push(i);
+            vis[i] = true;
+        }
+    }    
+    
+    while(!q.empty())   {
+        int x = q.front();
+        q.pop();
+        ans.push_back(x);
+        for(auto it : adjList[x])   {
+            indeg[it]--;
+            if(indeg[it] == 0)  {
+                q.push(it);
+                vis[it] = true;
+            }
+        }
+    }
+
+    return ans;
+}
+
+
+//by dfs
+#include <bits/stdc++.h>
+#define vi vector<int>
+#define vvi vector<vi>
+#define vb vector<bool>
+
+vector<int> topologicalSort(vector<vector<int>> &edges, int n, int e)  {
+    vi ans;
+    vb vis(n, false);
+    vvi adjList(n);
+    vi indeg(n, 0);
+    queue<int> q;
+
+    for(auto it : edges)    
+        adjList[it[0]].push_back(it[1]), indeg[it[1]]++;
+
+    for(int i=0; i<n; i++)  {
+        if(indeg[i] == 0)   {
+            q.push(i);
+            vis[i] = true;
+        }
+    }    
+    
+    while(!q.empty())   {
+        int x = q.front();
+        q.pop();
+        ans.push_back(x);
+        for(auto it : adjList[x])   {
+            indeg[it]--;
+            if(indeg[it] == 0)  {
+                q.push(it);
+                vis[it] = true;
+            }
+        }
+    }
+
+    return ans;
+}

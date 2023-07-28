@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+#define vi vector<int>
+#define vvi vector<vi>
+#define vb vector<bool>
+
+void dfs(int i, vb& vis, vvi& adjList, vi& ans) {
+    vis[i] = true;
+    ans.push_back(i);
+    for(auto it : adjList[i])   {
+        if(!vis[it])
+        dfs(it, vis, adjList, ans);
+    }
+}
+
+vector<vector<int>> depthFirstSearch(int n, int E, vector<vector<int>> &edges)  {
+    vvi adjList(n);
+    for(auto it : edges)    {
+        adjList[it[0]].push_back(it[1]);
+        adjList[it[1]].push_back(it[0]);
+    }
+    vvi ans;
+    vb vis(n, false);
+    for(int i=0; i<n; i++)  {
+        if(!vis[i])     {
+            vi temp;
+            dfs(i, vis, adjList, temp);
+            ans.push_back(temp);
+        }
+    }
+    return ans;
+}

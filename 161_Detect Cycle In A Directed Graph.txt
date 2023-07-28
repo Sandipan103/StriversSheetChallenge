@@ -1,0 +1,75 @@
+// by dfs
+
+#include<bits/stdc++.h>
+#define vb vector<bool>
+#define vi vector<int>
+#define vvi vector<vi>
+
+bool dfs(int i, vb& vis, vb& dfsVis, vvi& adjList)  {
+  vis[i] = true;
+  dfsVis[i] = true;
+
+  for(auto it : adjList[i]) {
+    if(vis[it] && dfsVis[it]) return true;
+    if(vis[it]) continue;
+    if(dfs(it, vis, dfsVis, adjList)) return true;
+  }
+
+  dfsVis[i] = false;
+  return false;
+}
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  vb vis(n+1, false), dfsVis(n+1, false);
+  vvi adjList(n+1);
+  for(auto it : edges)
+    adjList[it.first].push_back(it.second);
+    
+  for(int i=1; i<=n; i++) {
+    if(!vis[i] && dfs(i, vis, dfsVis, adjList))
+      return true;
+  }
+  return false;
+}
+
+
+
+// by BFS
+
+#include<bits/stdc++.h>
+#define vb vector<bool>
+#define vi vector<int>
+#define vvi vector<vi>
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  vb vis(n+1, false);
+  vvi adjList(n+1);
+  queue<int> q;
+  vi indeg(n+1, 0);
+  vi ans;
+
+  for(auto it : edges)
+    adjList[it.first].push_back(it.second), indeg[it.second]++;
+
+  for(int i=1; i<=n; i++)  {
+      if(indeg[i] == 0)   {
+          q.push(i);
+          vis[i] = true;
+      }
+  }    
+    
+  while(!q.empty())   {
+      int x = q.front();
+      q.pop();
+      ans.push_back(x);
+      for(auto it : adjList[x])   {
+          indeg[it]--;
+          if(indeg[it] == 0)  {
+              q.push(it);
+              vis[it] = true;
+          }
+      }
+  }
+
+  return ans.size() != n;
+}
